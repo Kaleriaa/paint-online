@@ -1,0 +1,27 @@
+@import '../../shared/constants/variables';
+
+.settings {
+    width: 100%;
+    height: $settings-height;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    background-color: transparent;
+    border-bottom: 1.5px solid $border-color;
+    font-size: 14px;
+    padding-left: 20px;
+}
+
+.input {
+    width: 40px;
+    height: 30px;
+    border: none;
+    &:focus {
+        outline: none;
+    }
+}
+
+.text {
+    height: fit-content;
+}

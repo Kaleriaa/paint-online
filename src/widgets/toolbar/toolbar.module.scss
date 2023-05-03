@@ -1,0 +1,24 @@
+@import "../../shared/constants/variables";
+
+.toolbar {
+    width: 100%;
+    height: $toolbar-height;
+    background-color: transparent;
+    border-bottom: 1.5px solid $border-color;
+    display: grid;
+    grid-template-columns: repeat(6, 0.5fr) 5fr repeat(3, 0.5fr);
+    place-items: center;
+}
+
+.tool {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
