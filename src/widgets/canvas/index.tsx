@@ -27,6 +27,7 @@ export const Canvas = () => {
         ctx?.beginPath()
         if (x && y) ctx?.moveTo(x, y)
         ctx?.lineTo(offsetX, offsetY)
+        //ctx?.arc(offsetX, offsetY, 50, 0, 2 * Math.PI)
         ctx?.stroke()
         updateCanvasCoords({ x: offsetX, y: offsetY })
     }
