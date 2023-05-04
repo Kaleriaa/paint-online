@@ -1,4 +1,4 @@
-@import '../../shared/constants/variables';
+@import '../../shared/variables';
 
 .canvas {
     background-color: #fff;
@@ -8,5 +8,5 @@
 .wrapper {
     display: grid;
     place-content: center;
-    height: calc(100vh - $toolbar-height - $settings-height);
+    margin-top: 40px;
 }

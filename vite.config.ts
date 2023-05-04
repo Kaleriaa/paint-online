@@ -8,4 +8,12 @@ export default defineConfig({
     server: {
         port: 3000,
     },
+    css: {
+        modules: {
+            generateScopedName: '[local]__[hash:base64:5]',
+        },
+    },
+    optimizeDeps: {
+        include: ['classnames'],
+    },
 })

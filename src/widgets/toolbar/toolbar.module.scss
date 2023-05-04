@@ -1,4 +1,4 @@
-@import "../../shared/constants/variables";
+@import "../../shared/variables";
 
 .toolbar {
     width: 100%;
@@ -6,13 +6,21 @@
     background-color: transparent;
     border-bottom: 1.5px solid $border-color;
     display: grid;
-    grid-template-columns: repeat(6, 0.5fr) 5fr repeat(3, 0.5fr);
+    grid-template-columns: repeat(5, 0.5fr) 5fr repeat(3, 0.5fr);
     place-items: center;
 }
 
+.input {
+    display: none;
+}
+
 .tool {
+    display: inline-block;
     cursor: pointer;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     width: 30px;
     height: 30px;
@@ -21,4 +29,9 @@
         width: 20px;
         height: 20px;
     }
+}
+
+input[type=radio]:checked + label {
+    background-color: #fff;
+    border-radius: 5px;
 }

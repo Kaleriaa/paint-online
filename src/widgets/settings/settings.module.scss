@@ -1,4 +1,4 @@
-@import '../../shared/constants/variables';
+@import '../../shared/variables';
 
 .settings {
     width: 100%;
@@ -17,10 +17,15 @@
     width: 40px;
     height: 30px;
     border: none;
+    padding: 4px;
     &:focus {
         outline: none;
     }
 }
+
+ .color {
+    margin-left: 10px;
+ }
 
 .text {
     height: fit-content;
