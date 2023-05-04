@@ -2,10 +2,14 @@ import React from 'react'
 import style from './toolbar.module.scss'
 import { updateTool } from 'entities/tools/model'
 import { actIcons, toolBarIcons } from './config'
+import { ToolsEnum } from 'entities/tools/type'
 
 export const ToolBar = () => {
-    const onChangeTool = (e: React.FormEvent) =>
-        updateTool((e.target as HTMLInputElement).value)
+    const onChangeTool = (e: React.FormEvent) => {
+        const str = (e.target as HTMLInputElement).value.toUpperCase()
+        const toolEnum = ToolsEnum[str as keyof typeof ToolsEnum]
+        updateTool(toolEnum)
+    }
 
     return (
         <div className={style.toolbar} onChange={onChangeTool}>

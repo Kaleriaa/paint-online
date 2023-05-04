@@ -1,40 +1,69 @@
 import React from 'react'
 import style from './canvas.module.scss'
-import { $canvasCoords, updateCanvasCoords } from 'entities/canvas/model'
-import { $color } from 'entities/color/model'
+import {
+    $color,
+    $lineThickness,
+    $tool,
+    $canvasCoords,
+    updateCanvasCoords,
+} from 'entities'
 import { useUnit } from 'effector-react'
-import { $lineThickness } from 'entities/line-thickness/module'
+import { drawConfig } from '@features/draw-config'
+import { ToolsEnum } from 'entities/tools/type'
 
 export const Canvas = () => {
-    const [isDrawing, setIsDrawing] = React.useState(false)
     const canvasRef = React.useRef<HTMLCanvasElement>(null)
+    const [isDrawing, setIsDrawing] = React.useState<boolean>(false)
+    const [startCoords, setStartCoords] = React.useState<
+        Record<string, number>
+    >({})
+    const [saved, setSaved] = React.useState<string>('')
     const ctx = canvasRef.current?.getContext('2d')
     const { x, y } = useUnit($canvasCoords)
-    const [color, depth] = useUnit([$color, $lineThickness])
+    const [color, depth, tool] = useUnit([$color, $lineThickness, $tool])
+    const currentTool = drawConfig[tool]
 
     const onStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         const { offsetX, offsetY } = e.nativeEvent
-        updateCanvasCoords({ x: offsetX, y: offsetY })
+        setStartCoords({ startX: offsetX, startY: offsetY })
         setIsDrawing(true)
+
+        if (ctx) {
+            ctx.strokeStyle = color
+            ctx.lineWidth = depth
+            ctx.fillStyle = color
+        }
+        updateCanvasCoords({ x: offsetX, y: offsetY })
+        ctx?.beginPath()
+
+        if (x && y) ctx?.moveTo(x, y)
+        if (
+            (tool === ToolsEnum.CIRCLE || tool === ToolsEnum.SQUARE) &&
+            canvasRef.current
+        )
+            setSaved(canvasRef.current.toDataURL())
     }
 
     const onDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         if (!isDrawing) return
 
         const { offsetX, offsetY } = e.nativeEvent
-        if (ctx?.strokeStyle) ctx.strokeStyle = color
-        if (ctx?.strokeStyle) ctx.lineWidth = depth
-        ctx?.beginPath()
-        if (x && y) ctx?.moveTo(x, y)
-        ctx?.lineTo(offsetX, offsetY)
-        //ctx?.arc(offsetX, offsetY, 50, 0, 2 * Math.PI)
-        ctx?.stroke()
+
+        currentTool?.mousemove(
+            ctx!,
+            offsetX,
+            offsetY,
+            startCoords.startX,
+            startCoords.startY,
+            saved,
+        )
         updateCanvasCoords({ x: offsetX, y: offsetY })
     }
 
     const onEndDrawing = () => {
-        updateCanvasCoords({ x: null, y: null })
+        ctx?.closePath()
         setIsDrawing(false)
+        updateCanvasCoords({ x: null, y: null })
     }
 
     return (

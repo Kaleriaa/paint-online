@@ -4,7 +4,7 @@ import { useUnit } from 'effector-react/effector-react.mjs'
 import {
     $lineThickness,
     updateLineThickness,
-} from 'entities/line-thickness/module'
+} from 'entities/line-thickness/model'
 import { updateColor } from 'entities/color/model'
 
 export const Settings = () => {
