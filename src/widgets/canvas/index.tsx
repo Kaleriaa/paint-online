@@ -6,6 +6,8 @@ import {
     $tool,
     $canvasCoords,
     updateCanvasCoords,
+    addCanvas,
+    undoEv,
 } from 'entities'
 import { useUnit } from 'effector-react'
 import { drawConfig } from '@features/draw-config'
@@ -18,6 +20,7 @@ export const Canvas = () => {
         Record<string, number>
     >({})
     const [saved, setSaved] = React.useState<string>('')
+    addCanvas(canvasRef)
     const ctx = canvasRef.current?.getContext('2d')
     const { x, y } = useUnit($canvasCoords)
     const [color, depth, tool] = useUnit([$color, $lineThickness, $tool])
@@ -33,6 +36,7 @@ export const Canvas = () => {
             ctx.lineWidth = depth
             ctx.fillStyle = color
         }
+        if (canvasRef.current) undoEv(canvasRef.current?.toDataURL())
         updateCanvasCoords({ x: offsetX, y: offsetY })
         ctx?.beginPath()
 

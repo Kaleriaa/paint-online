@@ -1,3 +1,4 @@
+import { useUndo } from '@features/useUndo'
 import { BsBrush, BsEraser, BsSquare, BsCircle } from 'react-icons/bs'
 import { CiUndo, CiRedo, CiSaveDown1 } from 'react-icons/ci'
 
@@ -33,11 +34,12 @@ export const toolBarIcons: Tools[] = [
         id: 'empty',
     },
 ]
-
+//TODO: уточнить!
 export const actIcons: Tools[] = [
     {
         component: <CiUndo />,
         id: 'undo',
+        onClick: useUndo,
     },
     {
         component: <CiRedo />,

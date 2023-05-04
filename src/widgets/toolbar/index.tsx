@@ -1,8 +1,11 @@
 import React from 'react'
 import style from './toolbar.module.scss'
 import { updateTool } from 'entities/tools/model'
-import { actIcons, toolBarIcons } from './config'
+import { toolBarIcons } from './config'
 import { ToolsEnum } from 'entities/tools/type'
+import { useUndo } from '@features/useUndo'
+import { CiRedo, CiSaveDown1, CiUndo } from 'react-icons/ci'
+import { useRedo } from '@features/useRedo'
 
 export const ToolBar = () => {
     const onChangeTool = (e: React.FormEvent) => {
@@ -10,6 +13,8 @@ export const ToolBar = () => {
         const toolEnum = ToolsEnum[str as keyof typeof ToolsEnum]
         updateTool(toolEnum)
     }
+    const undo = useUndo()
+    const redo = useRedo()
 
     return (
         <div className={style.toolbar} onChange={onChangeTool}>
@@ -30,13 +35,15 @@ export const ToolBar = () => {
                     </div>
                 )
             })}
-            {actIcons.map(({ component, id, onClick }) => {
-                return (
-                    <button key={id} className={style.tool} onClick={onClick}>
-                        {component}
-                    </button>
-                )
-            })}
+            <button className={style.tool} onClick={undo}>
+                <CiUndo />
+            </button>
+            <button className={style.tool} onClick={redo}>
+                <CiRedo />
+            </button>
+            <button className={style.tool}>
+                <CiSaveDown1 />
+            </button>
         </div>
     )
 }
