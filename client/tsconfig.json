@@ -16,11 +16,10 @@
         "baseUrl": "./src",
         "paths": {
             "@app/*": ["app/*"],
-            //"@entities/*": ["entities/*"],
+            "@entities/*": ["entities/*"],
             "@features/*": ["features/*"],
             "@shared/*": ["shared/*"],
             "@widgets/*": ["widgets/*"]
-            //"@constants/*": ["shared/constants/*"]
         },
 
         /* Linting */
