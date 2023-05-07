@@ -1,19 +1,14 @@
-import React from 'react'
-import style from './toolbar.module.scss'
-import { toolBarIcons } from './config'
 import { ToolsEnum, updateTool } from 'entities/tools'
-import { useUndo } from '@features/useUndo'
-import { CiRedo, CiSaveDown1, CiUndo } from 'react-icons/ci'
-import { useRedo } from '@features/useRedo'
+import React from 'react'
+import { toolBarIcons } from './config'
+import { useActions } from './hooks'
+import style from './toolbar.module.scss'
 
 export const ToolBar = () => {
-    const onChangeTool = (e: React.FormEvent) => {
-        const str = (e.target as HTMLInputElement).value.toUpperCase()
-        const toolEnum = ToolsEnum[str as keyof typeof ToolsEnum]
-        updateTool(toolEnum)
-    }
-    const undo = useUndo()
-    const redo = useRedo()
+    const onChangeTool = (e: React.FormEvent) =>
+        updateTool((e.target as HTMLInputElement).value as ToolsEnum)
+
+    const actions = useActions()
 
     return (
         <div className={style.toolbar} onChange={onChangeTool}>
@@ -34,15 +29,13 @@ export const ToolBar = () => {
                     </div>
                 )
             })}
-            <button className={style.tool} onClick={undo}>
-                <CiUndo />
-            </button>
-            <button className={style.tool} onClick={redo}>
-                <CiRedo />
-            </button>
-            <button className={style.tool}>
-                <CiSaveDown1 />
-            </button>
+            {actions.map(({ component, id, onClick }) => {
+                return (
+                    <button key={id} className={style.tool} onClick={onClick}>
+                        {component}
+                    </button>
+                )
+            })}
         </div>
     )
 }

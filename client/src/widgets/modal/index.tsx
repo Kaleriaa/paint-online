@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import style from './modal.module.css'
-import { addUserName } from 'entities/user'
+import { addUserName } from 'entities'
 
 export const Modal = () => {
     const [showModal, setShowModal] = React.useState(true)

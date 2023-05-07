@@ -1,4 +1,4 @@
-import { ToolsEnum } from 'entities/tools/type'
+import { ToolsEnum } from '@entities/tools/type'
 
 type ToolFn = {
     mousemove: (
