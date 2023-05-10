@@ -4,6 +4,7 @@ import { Settings } from '@widgets/settings'
 import { Canvas } from '@widgets/canvas'
 import { Modal } from '@widgets/modal'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { AlertMessage } from '@widgets/alert-message'
 
 export const App = () => {
     return (
@@ -13,6 +14,7 @@ export const App = () => {
                 element={
                     <>
                         <Modal />
+                        <AlertMessage></AlertMessage>
                         <div className={style.app}>
                             <ToolBar />
                             <Settings />
