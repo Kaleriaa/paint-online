@@ -1,3 +1,4 @@
+import { updateCanvasData, updateCanvasDataWS } from 'entities'
 import { createEvent, createStore, sample } from 'effector'
 import { $user, updateMessage } from '..'
 import { socket } from '@shared/api/socket'
@@ -23,6 +24,15 @@ sample({
     },
 })
 
-socket.on('hello', (name) => {
-    updateMessage(`Привет, ${name}`)
+sample({
+    clock: updateCanvasData,
+    filter: Boolean,
+    fn: (canvas) => {
+        socket.emit('draw', canvas)
+    },
+})
+
+socket.on('hello', (name) => updateMessage(`Присоединился ${name}`))
+socket.on('draw', (data) => {
+    updateCanvasDataWS(data)
 })

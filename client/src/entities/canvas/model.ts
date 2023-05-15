@@ -1,4 +1,4 @@
-import { createEvent, createStore } from 'effector'
+import { createEvent, createStore, sample } from 'effector'
 import { RefObject } from 'react'
 
 type Coords = {
@@ -17,13 +17,9 @@ export const $canvas = createStore<RefObject<HTMLCanvasElement> | null>(
     null,
 ).on(addCanvas, (_, can) => can)
 
-export const undoEv = createEvent<string>()
-export const redoEv = createEvent<string>()
-export const $undoList = createStore<string[]>([]).on(undoEv, (state, str) => [
-    ...state,
-    str,
-])
-export const $redoList = createStore<string[]>([]).on(redoEv, (state, str) => [
-    ...state,
-    str,
-])
+export const updateCanvasData = createEvent<string>()
+export const updateCanvasDataWS = createEvent<string>()
+export const $canvasData = createStore<string>('').on(
+    [updateCanvasData, updateCanvasDataWS],
+    (_, can) => can,
+)

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import style from './modal.module.css'
+import style from './modal.module.scss'
 import { addUserName } from 'entities'
 
 export const Modal = () => {

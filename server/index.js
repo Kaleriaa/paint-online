@@ -22,7 +22,7 @@ io.on('connection', (ws) => {
     })
 
     ws.on('draw', (data) => {
-        console.log('Drawing...')
+        console.log(`Drawing...${ws.id}`)
         ws.broadcast.to(session).emit('draw', data)
     })
 

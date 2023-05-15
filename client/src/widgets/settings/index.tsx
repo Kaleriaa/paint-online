@@ -1,14 +1,16 @@
 import React from 'react'
 import style from './settings.module.scss'
-import { useUnit } from 'effector-react/effector-react.mjs'
+import { useUnit } from 'effector-react'
 import {
+    updateColor,
+    $tool,
     $lineThickness,
     updateLineThickness,
-} from 'entities/line-thickness/model'
-import { updateColor } from 'entities/color/model'
+} from '@entities'
+import { ToolsEnum } from '@entities/tools'
 
 export const Settings = () => {
-    const depth = useUnit($lineThickness)
+    const [depth, tool] = useUnit([$lineThickness, $tool])
 
     const onChangeLine = (e: React.ChangeEvent<HTMLInputElement>) =>
         updateLineThickness(+e.target.value)
@@ -23,11 +25,13 @@ export const Settings = () => {
                 value={depth}
                 onChange={onChangeLine}
                 className={style.input}
+                disabled={tool === ToolsEnum.ERASER}
             />
             <input
                 className={style.color}
                 type="color"
                 onChange={onChangeColor}
+                disabled={tool === ToolsEnum.ERASER}
             />
         </div>
     )

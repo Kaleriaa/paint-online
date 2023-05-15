@@ -1,7 +1,7 @@
 import { ToolsEnum, updateTool } from 'entities/tools'
 import React from 'react'
 import { toolBarIcons } from './config'
-import { useActions } from './hooks'
+import { useActions } from './hooks/use-actions'
 import style from './toolbar.module.scss'
 
 export const ToolBar = () => {

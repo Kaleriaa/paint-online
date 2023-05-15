@@ -6,6 +6,7 @@ export const $message = createStore<string>('').on(
     updateMessage,
     (_, str) => str,
 )
+
 const onMessageIsNotEmpty = sample({
     source: $message,
     filter: Boolean,

@@ -6,7 +6,8 @@ import {
     $tool,
     undoEv,
     updateCanvasCoords,
-} from '@entities/index'
+    updateCanvasData,
+} from '@entities'
 import { ToolsEnum } from '@entities/tools'
 import { drawConfig } from '@features/draw-config'
 import { useUnit } from 'effector-react'
@@ -30,6 +31,7 @@ export const useDraw = () => {
     return {
         onStartDrawing: (e: React.MouseEvent<HTMLCanvasElement>) => {
             const ctx = canvasRef?.current?.getContext('2d')
+
             const { offsetX, offsetY } = e.nativeEvent
             setStartCoords({ startX: offsetX, startY: offsetY })
             setIsDrawing(true)
@@ -40,6 +42,7 @@ export const useDraw = () => {
                 ctx.fillStyle = color
             }
             if (canvasRef?.current) undoEv(canvasRef.current?.toDataURL())
+
             updateCanvasCoords({ x: offsetX, y: offsetY })
             ctx?.beginPath()
 
@@ -52,6 +55,7 @@ export const useDraw = () => {
         },
         onDrawing: (e: React.MouseEvent<HTMLCanvasElement>) => {
             if (!isDrawing) return
+
             const ctx = canvasRef?.current?.getContext('2d')
             const { offsetX, offsetY } = e.nativeEvent
 
@@ -70,6 +74,8 @@ export const useDraw = () => {
             ctx?.closePath()
             setIsDrawing(false)
             updateCanvasCoords({ x: null, y: null })
+            canvasRef?.current &&
+                updateCanvasData(canvasRef.current?.toDataURL())
         },
     }
 }
