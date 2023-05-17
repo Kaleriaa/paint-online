@@ -17,8 +17,12 @@ io.on('connection', (ws) => {
     console.log(`New user connected ${ws.id}`)
     ws.send('Connection is successes')
 
+    ws.on('hello', (name) => {
+        ws.broadcast.to(session).emit('hello', name)
+    })
+
     ws.on('draw', (data) => {
-        console.log('Drawing...')
+        console.log(`Drawing...${ws.id}`)
         ws.broadcast.to(session).emit('draw', data)
     })
 
